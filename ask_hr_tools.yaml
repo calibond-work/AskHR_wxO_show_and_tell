@@ -4,7 +4,7 @@ info:
   description: A collection of HR tools for compensation insights, offer generation, interview feedback, and time-off eligibility.
   version: 1.0.0
 servers:
-  - url: https://zjqykvn83k.execute-api.eu-north-1.amazonaws.com/HRProd
+  - url: http://localhost:3000
 paths:
   /check-time-off-eligibility:
     get:
