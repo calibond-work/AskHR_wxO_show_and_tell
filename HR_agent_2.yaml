@@ -1,0 +1,73 @@
+openapi: 3.1.0
+info:
+  title: HR Insights API
+  description: HR Insights API 
+  version: 1.0.0
+servers:
+  - url:  https://zjqykvn83k.execute-api.eu-north-1.amazonaws.com/HRProd
+
+paths:
+  /employee-engagement-insights:
+    get:
+      summary: Get employee engagement insights
+      operationId: getEmployeeEngagementInsights
+      responses:
+        '200':
+          description: Engagement analytics data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  department:
+                    type: string
+                  location:
+                    type: string
+                  engagement_scores:
+                    type: object
+                    properties:
+                      average_score:
+                        type: number
+                      top_performers:
+                        type: array
+                        items:
+                          type: string
+                      low_engagement_risk:
+                        type: array
+                        items:
+                          type: string
+                  survey_feedback_summary:
+                    type: string
+                  recommended_action:
+                    type: string
+
+  /generate-hr-summary:
+    get:
+      summary: Generate an HR summary report
+      operationId: generateHrSummary
+      responses:
+        '200':
+          description: Mocked HR summary report and download link
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  report_title:
+                    type: string
+                  prepared_for:
+                    type: string
+                  details:
+                    type: object
+                    properties:
+                      total_employees:
+                        type: integer
+                      average_tenure:
+                        type: string
+                      attrition_rate:
+                        type: string
+                      engagement_trend:
+                        type: string
+                  report_url:
+                    type: string
+
