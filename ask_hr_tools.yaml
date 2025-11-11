@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  title: HR Tools API
+  description: A collection of HR tools for compensation insights, offer generation, interview feedback, and time-off eligibility.
+  version: 1.0.0
+servers:
+  - url: https://zjqykvn83k.execute-api.eu-north-1.amazonaws.com/HRProd
+paths:
+  /check-time-off-eligibility:
+    get:
+      summary: Check employee time-off eligibility
+      operationId: checkTimeOffEligibility
+      parameters:
+        - name: employee_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: role
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: tenure_months
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: employment_type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [ full_time, part_time, contractor, intern ]
+      responses:
+        '200':
+          description: Time-off eligibility result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  eligible:
+                    type: boolean
+                  reason:
+                    type: string
+                  available_days:
+                    type: integer
+  
