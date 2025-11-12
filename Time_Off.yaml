@@ -11,7 +11,11 @@ paths:
   /leave-eligibility-check:
     post:
       summary: Check if a user is eligible for time off
-      description: Returns eligibility status and reasoning for requested leave.
+      description: |
+        Determines eligibility for vacation or sick leave.
+        Rules enforced:
+        - Vacation is not allowed on company holidays (New Year's Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, Day after Thanksgiving, Christmas Eve, Christmas Day).
+        - Sick leave cannot exceed 5 consecutive days.
       requestBody:
         required: true
         content:
@@ -29,11 +33,11 @@ paths:
                 startDate:
                   type: string
                   format: date
-                  example: "2025-11-15"
+                  example: "2025-12-25"
                 endDate:
                   type: string
                   format: date
-                  example: "2025-11-15"
+                  example: "2025-12-25"
               required: [userId, leaveType, startDate, endDate]
       responses:
         '200':
@@ -45,13 +49,13 @@ paths:
                 properties:
                   eligible:
                     type: boolean
-                    example: true
+                    example: false
                   reason:
                     type: string
-                    example: "You have 3 vacation days remaining."
+                    example: "Vacation is not allowed on 2025-12-25, a company holiday."
                   nextSteps:
                     type: string
-                    example: "Would you like to submit a time-off request?"
+                    example: "Please adjust your dates or leave type."
         '400':
           description: Invalid request body
         '500':
