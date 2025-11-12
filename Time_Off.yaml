@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: AskHR Time-Off Demo
+  version: 1.0.0
+servers:
+  - url:https://k7jlp9vrb2.execute-api.us-east-2.amazonaws.com/v1
+paths:
+  /leave-eligibility-check:
+    post:
+      summary: Check if a user is eligible for time off
+      description: Returns eligibility status and reasoning for requested leave.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "123"
+                leaveType:
+                  type: string
+                  enum: [vacation, sick, personal]
+                  example: "vacation"
+                startDate:
+                  type: string
+                  format: date
+                  example: "2025-11-15"
+                endDate:
+                  type: string
+                  format: date
+                  example: "2025-11-15"
+              required: [userId, leaveType, startDate, endDate]
+      responses:
+        '200':
+          description: Successful eligibility check
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  eligible:
+                    type: boolean
+                    example: true
+                  reason:
+                    type: string
+                    example: "You have 3 vacation days remaining."
+                  nextSteps:
+                    type: string
+                    example: "Would you like to submit a time-off request?"
+        '400':
+          description: Invalid request body
+        '500':
+          description: Internal server error
