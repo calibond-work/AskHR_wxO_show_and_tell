@@ -1,9 +1,12 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
   title: AskHR Time-Off Demo
   version: 1.0.0
+  description: Checks time off availability and eligibility
+
 servers:
-  - url:https://k7jlp9vrb2.execute-api.us-east-2.amazonaws.com/v1
+  - url: https://k7jlp9vrb2.execute-api.us-east-2.amazonaws.com/v1
+
 paths:
   /leave-eligibility-check:
     post:
