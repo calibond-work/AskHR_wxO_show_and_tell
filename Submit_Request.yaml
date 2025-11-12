@@ -1,0 +1,69 @@
+openapi: 3.0.1
+info:
+  title: HR Request API
+  version: 1.0.0
+  description: Submits requests and confirms in the agent.
+
+servers:
+  - url: https://6wt8pl8qhj.execute-api.us-east-2.amazonaws.com/v1_
+
+paths:
+  /SubmitHRRequest:
+    post:
+      summary: Submit an HR request (vacation, sick leave, etc.)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "123"
+                requestType:
+                  type: string
+                  enum: [vacation, sick]
+                  example: "vacation"
+                details:
+                  type: object
+                  properties:
+                    startDate:
+                      type: string
+                      format: date
+                      example: "2025-11-14"
+                    endDate:
+                      type: string
+                      format: date
+                      example: "2025-11-17"
+      responses:
+        '200':
+          description: Request submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  submitted:
+                    type: boolean
+                  requestId:
+                    type: string
+                  message:
+                    type: string
+                  type:
+                    type: string
+                  details:
+                    type: object
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      x-amazon-apigateway-integration:
+        uri: arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:<your-account-id>:function:SubmitHRRequest/invocations
+        httpMethod: POST
+        type: aws_proxy
